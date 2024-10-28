@@ -3,18 +3,14 @@ package main
 import (
 	"log"
 	"net/http"
-)
 
-func testHandler(myVar string) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(myVar))
-	}
-}
+	"github.com/ldcmleo/blog-api/handlers"
+)
 
 func main() {
 	mux := http.NewServeMux()
 
-	th := testHandler("hola mundo")
+	th := handlers.TestHandler("Hola mundo")
 	mux.Handle("/test", th)
 
 	log.Print("Listening... ")
