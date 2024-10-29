@@ -2,25 +2,26 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
-	"github.com/ldcmleo/blog-api/database"
+	"github.com/ldcmleo/blog-api/db"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
 func main() {
-	db, err := database.GetDatabaseClient()
+	client, err := db.Connect()
 	if err != nil {
-		panic("error getting database" + err.Error())
+		log.Fatal("error with database: " + err.Error())
 	}
 
-	dbNames, nmErr := db.ListDatabaseNames(context.TODO(), bson.D{})
-	if nmErr != nil {
-		panic("error nmerr: " + nmErr.Error())
+	dbNames, qErr := client.ListDatabaseNames(context.TODO(), bson.D{})
+	if qErr != nil {
+		panic("error getting database names: " + qErr.Error())
 	}
 
 	for _, names := range dbNames {
-		log.Println(names)
+		fmt.Println(names)
 	}
 
 	// mux := http.NewServeMux()
