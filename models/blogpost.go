@@ -7,9 +7,9 @@ import (
 )
 
 type BlogPost struct {
-	ID        primitive.ObjectID `bson:"_id,omitempty"`
-	Title     string             `bson:"title"`
-	Content   string             `bson:"content"`
-	Tags      []string           `bson:"tags"`
-	CreatedAt time.Time          `bson:"created_at"`
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Title     string             `bson:"title" json:"title"`
+	Content   string             `bson:"content" json:"content"`
+	Tags      []string           `bson:"tags" json:"tags"`
+	CreatedAt time.Time          `bson:"created_at" json:"created_at"`
 }

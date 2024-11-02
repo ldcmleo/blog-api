@@ -1,34 +1,17 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"log"
+	"net/http"
 
-	"github.com/ldcmleo/blog-api/db"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/ldcmleo/blog-api/handlers"
 )
 
 func main() {
-	client, err := db.Connect()
-	if err != nil {
-		log.Fatal("error with database: " + err.Error())
-	}
+	mux := http.NewServeMux()
 
-	dbNames, qErr := client.ListDatabaseNames(context.TODO(), bson.D{})
-	if qErr != nil {
-		panic("error getting database names: " + qErr.Error())
-	}
+	mux.Handle("/", handlers.GetBlogPosts())
 
-	for _, names := range dbNames {
-		fmt.Println(names)
-	}
-
-	// mux := http.NewServeMux()
-
-	// th := handlers.TestHandler("Hola mundo")
-	// mux.Handle("/test", th)
-
-	// log.Print("Listening... ")
-	// http.ListenAndServe(":3000", mux)
+	log.Print("Listening... ")
+	http.ListenAndServe(":3000", mux)
 }
