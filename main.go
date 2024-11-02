@@ -10,7 +10,11 @@ import (
 func main() {
 	mux := http.NewServeMux()
 
-	mux.Handle("/", handlers.GetBlogPosts())
+	mux.HandleFunc("GET /api/posts", handlers.GetBlogPosts)
+	mux.HandleFunc("POST /api/posts", handlers.CreateBlogPost)
+	mux.HandleFunc("GET /api/posts/{id}", handlers.GetBlogPost)
+	mux.HandleFunc("PUT /api/posts/{id}", handlers.UpdateBlogPost)
+	mux.HandleFunc("DELETE /api/posts/{id}", handlers.DeleteBlogPost)
 
 	log.Print("Listening... ")
 	http.ListenAndServe(":3000", mux)
